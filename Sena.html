@@ -1,0 +1,203 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+h1 {
+text-align: center;
+height: 60px;
+    width: 790px;
+}
+</style>
+
+<h1 style="color:Black; font-family:tahoma;">Sena's Birthday Geo-Puzzle</h1>
+<p> Click on the marker below to start! Each marker will give you instructions to solve the puzzle. Good luck!</p>
+
+<title>Sena's Birthday Puzzle</title>
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+
+ <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+	
+</head>
+<body style="background-color:white;">
+
+<div id="map" style="width: 800px; height: 500px;"></div>
+<script>
+
+	var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+		osm = L.tileLayer(osmUrl, {maxZoom: 50, attribution: osmAttrib});
+
+var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+
+var map = L.map('map').setView([45.517028, -73.590247], 5).addLayer(osm);
+
+	var baseLayers = {
+			"OpenStreetMaps": osm,
+			"Black & White": OpenStreetMap_BlackAndWhite
+		};
+
+L.control.layers(baseLayers).addTo(map);
+
+map.addControl(new L.Control.Fullscreen());
+
+L.control.scale().addTo(map);
+
+L.marker([45.517028, -73.590247]).addTo(map)
+		.bindPopup("<b>Welcome Sena!</b><br/>Are you ready for a challenge? You know this is where I live. Now, I want you to go to the place where you live.");
+		
+L.marker([41.0082, 28.9784]).addTo(map)
+		.bindPopup("<b>OK, you got this one!</b><br/>This one was easy. Here is a more challenging one: can you locate the university where we studied together?");
+
+var universityIcon = L.icon({
+        iconUrl: 'pins/schools.png',
+        iconSize: [30, 40], 
+        popupAnchor: [0,-15]
+        });
+		
+var houseIcon = L.icon({
+        iconUrl: 'pins/real-estate.png',
+        iconSize: [30, 40], 
+        popupAnchor: [0,-15]
+        });
+		
+var hotelIcon = L.icon({
+        iconUrl: 'pins/hotels.png',
+        iconSize: [30, 40], 
+        popupAnchor: [0,-15]
+        });
+		
+var geziIcon = L.icon({
+        iconUrl: 'pins/gezi.png',
+        iconSize: [30, 40], 
+        popupAnchor: [0,-15]
+        });
+		
+var restoIcon = L.icon({
+        iconUrl: 'pins/restaurants.png',
+        iconSize: [30, 40], 
+        popupAnchor: [0,-15]
+        });
+		
+var kafkaIcon = L.icon({
+        iconUrl: 'pins/kafka.png',
+        iconSize: [30, 40], 
+        popupAnchor: [0,-15]
+        });
+		
+var university = L.marker([41.083617, 29.051780], {icon: universityIcon})
+		.bindPopup("<b>Well done! So, you are done with the warm-up!</b><br/>I am sure it revived some memories. Would this help you remember where Cokokrem is? Hint: find Halk Gida!");
+
+var universityMarkers = new L.FeatureGroup();
+
+universityMarkers.addLayer(university);
+
+map.on('zoomend', function() {
+    if (map.getZoom() <14){
+            map.removeLayer(universityMarkers);
+    }
+    else {
+            map.addLayer(universityMarkers);
+        }
+});
+
+var house = L.marker([41.087478, 29.047871], {icon: houseIcon})
+		.bindPopup("<b>Well, this is impressive!</b><br/>How could we forget our super cozy (!) apartment on Bahcivan Cikmazi and our sacred Halk Gida:) But let's not forget the past! Do you remember where our lovely dorm rooms were?");
+
+var houseMarkers = new L.FeatureGroup();
+
+houseMarkers.addLayer(house);
+
+map.on('zoomend', function() {
+    if (map.getZoom() <19){
+            map.removeLayer(houseMarkers);
+    }
+    else {
+            map.addLayer(houseMarkers);
+        }
+});
+
+var dorm = L.marker([41.086622, 29.043487], {icon: hotelIcon})
+		.bindPopup("<b>It wasn't that hard, was it?</b><br/>Perhaps wasn't the most comfy dorm but this is where we've become friends. So, important stuff! Now, it's time to remember how we became 'real' friends. Hold on! Does it smell like tear gas?! Do you remember the good ol' days of protesting?");
+
+var dormMarkers = new L.FeatureGroup();
+
+dormMarkers.addLayer(dorm);
+
+map.on('zoomend', function() {
+    if (map.getZoom() <19){
+            map.removeLayer(dormMarkers);
+    }
+    else {
+            map.addLayer(dormMarkers);
+        }
+});
+
+var gezi = L.marker([41.037823, 28.986776], {icon: geziIcon})
+		.bindPopup("<b>So, you remember!</b><br/>Well, some people meet in the cafes, some become friends exchanging notes, some do activities together. Ours was a little off the wall, I guess. Yup, this is where we kinda started hanging out together and tasted the tear gas! Bad news: puzzle isn't over. But you're getting there. I am kinda hungry though. Do you know any esnaf lokantasi in town where you can take me for lunch?");
+
+var geziMarkers = new L.FeatureGroup();
+
+geziMarkers.addLayer(gezi);
+
+map.on('zoomend', function() {
+    if (map.getZoom() <16){
+            map.removeLayer(geziMarkers);
+    }
+    else {
+            map.addLayer(geziMarkers);
+        }
+});
+
+var esnaf = L.marker([41.035000, 28.982028], {icon: restoIcon})
+		.bindPopup("<b>Are you still with me?</b><br/>If you are here, it means that I got lucky because I could not find its exact location on the map :( Well, it was somewhere not far from here... Good news: there is only one hint left to solve the puzzle! Bad news: This one is gonna be hard! Hint: die verwandlung.");
+
+var esnafMarkers = new L.FeatureGroup();
+
+esnafMarkers.addLayer(esnaf);
+
+map.on('zoomend', function() {
+    if (map.getZoom() <17){
+            map.removeLayer(esnafMarkers);
+    }
+    else {
+            map.addLayer(esnafMarkers);
+        }
+});
+
+var kafka = L.marker([41.032974, 28.977428], {icon: kafkaIcon})
+		.bindPopup("<b>Congrats! You're done! Welcome to Kafka Kafe! </b><br/>You were able to get to the place where we smoked our last sarma sigara together! Hope you enjoyed this little suprise. Now you can take yourself to the last step. Don't worry, you are done with the geo-puzzle. All you need to do is open the source code :) ");
+
+var kafkaMarkers = new L.FeatureGroup();
+
+kafkaMarkers.addLayer(kafka);
+
+map.on('zoomend', function() {
+    if (map.getZoom() <18){
+            map.removeLayer(kafkaMarkers);
+    }
+    else {
+            map.addLayer(kafkaMarkers);
+        }
+});
+
+</script>
+
+</body>
+ 
+    <!-- Dogum gunun kutlu olsun!!! Beraber gidemedigimiz her yere, her etkinlige, her bara, her kafeye gidebildigimiz; 
+	beraber yapamadigimiz her seyi yaptigimiz; gidemedigimiz butun tatillere gittigmiz 
+	ve kacirdigimiz butun anlari yasadigimiz yillarimiz olmasi dilegiyle! Seni ozlemce kucaklayan dostun, Deniz.-->
+</html>
